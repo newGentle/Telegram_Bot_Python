@@ -27,7 +27,7 @@ def handler_values(message):
 def handler_text(message):
     splitted = message.text.lower().split()
     try:
-        converted = Convert.do_it(splitted)
+        converted = Convert.convert(splitted)
         bot.send_message(message.chat.id, converted)
     except APIException as e:
         bot.send_message(message.chat.id, str(e))
