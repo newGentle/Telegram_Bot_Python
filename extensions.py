@@ -12,7 +12,7 @@ class Convert():
     def do_it(splitted):
         if len(splitted) == 3 and splitted[-1].isdigit():
             _to, _from, _amount = splitted
-            if _to not in list(currencies.keys()) and _from not in list(currencies.keys()):
+            if _to not in list(currencies.keys()) or _from not in list(currencies.keys()):
                 raise APIException('Введены недоступные валюты\nДоступные валюты /values')
             elif _from == _to:
                 raise APIException(f'Нельзя конвертировать одинаковые валюты {_from} на {_to}')
