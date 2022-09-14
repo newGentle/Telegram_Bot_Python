@@ -9,7 +9,7 @@ class APIException(Exception):
 
 class Convert():
     @staticmethod
-    def do_it(splitted):
+    def convert(splitted):
         if len(splitted) == 3 and splitted[-1].isdigit():
             _to, _from, _amount = splitted
             if _to not in list(currencies.keys()) or _from not in list(currencies.keys()):
