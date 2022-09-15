@@ -1,6 +1,7 @@
 import json
 import requests
 from config import currencies, APIKey
+import traceback
 
 
 class APIException(Exception):
@@ -20,9 +21,14 @@ class Convert():
                 raise APIException('Нельзя получить курс больше единицы\nПодробно можно посмотреть /help')
             else:
                 url = f'https://min-api.cryptocompare.com/data/price?fsym={currencies[_from]}&tsyms={currencies[_to]}{APIKey}'
-                response = requests.get(url)
-                result = json.loads(response.content)
-                return f'{_amount} {_from} = {result[currencies[_to]]} {_to}'
+                try:
+                    response = requests.get(url)
+                    result = json.loads(response.content)
+                except Exception as e:
+                    traceback.print_tb(e.__traceback__)
+                    raise APIException(f'Сервер временно не доступен\nПопробуйте снова чуть позже\nИзвините за неудобства')
+                else:
+                    return f'{_amount} {_from} = {result[currencies[_to]]} {_to}'
         else:
             raise APIException('неправильно введен запрос\nПодробно можно посмотреть /help')
             
